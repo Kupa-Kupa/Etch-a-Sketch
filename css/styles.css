@@ -31,6 +31,7 @@ main {
     /* flex: 1; */
 
     display: flex;
+    gap: 3em;
     /* justify-content: center;
     align-items: center; */
 }
@@ -38,6 +39,7 @@ main {
 .grid-container {
 
     border: solid 4px rgb(0, 0, 0);
+    background-color: black;
 
     min-width: 600px;
     /* max-width: 600px; */
@@ -48,7 +50,8 @@ main {
 
     display: flex;
     flex-direction: column;
-
+    /* can create the illusion of a border by using a gap */
+    gap: 1px;
 }
 
 .row {
@@ -56,10 +59,13 @@ main {
     flex: 1;
 
     display: flex;
+    /* can create the illusion of a border by using a gap */
+    gap: 1px;
 }
 
 .column {
-    border: solid 1px rgb(46, 46, 46);
+    background-color: white;
+    /* border: solid 1px rgb(46, 46, 46); */
 
     flex: 1;
 }
@@ -72,12 +78,12 @@ main {
 
 
 
-.square-grid {
-    min-width: calc(100% / 16);
-    min-height: 37.5px;
-    /* min-height: calc(100% / 16); */
-    /* height: 100%;
-    width: 100%; */
+.slider {
 
-    /* outline: solid 1px red; */
+    max-width: 200px;
+    display: flex;
+    align-items: flex-start;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    gap: 1em;
 }
