@@ -1,0 +1,83 @@
+/*--- HTML ---*/
+html {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+/*--- Body ---*/
+body {
+    /* want the body to take up 100% of viewable page */
+    height: 100vh;
+    margin: 0;
+
+    /* center text for page */
+    text-align: center;
+    
+}
+
+
+/*--- main ---*/
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main {
+    /* flex: 1; */
+
+    display: flex;
+    /* justify-content: center;
+    align-items: center; */
+}
+
+.grid-container {
+
+    border: solid 4px rgb(0, 0, 0);
+
+    min-width: 600px;
+    /* max-width: 600px; */
+    min-height: 600px;
+    /* max-height: 600px; */
+
+    /* flex: 1; */
+
+    display: flex;
+    flex-direction: column;
+
+}
+
+.row {
+    /* border: solid 1px red; */
+    flex: 1;
+
+    display: flex;
+}
+
+.column {
+    border: solid 1px rgb(46, 46, 46);
+
+    flex: 1;
+}
+
+.column:hover {
+    background-color: blue;
+
+}
+
+
+
+
+.square-grid {
+    min-width: calc(100% / 16);
+    min-height: 37.5px;
+    /* min-height: calc(100% / 16); */
+    /* height: 100%;
+    width: 100%; */
+
+    /* outline: solid 1px red; */
+}
