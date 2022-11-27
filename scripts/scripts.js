@@ -80,3 +80,69 @@ function deleteGrid() {
 
     main.append(gridContainer);
 }
+
+
+
+let oldSchool11Button = document.querySelector("#old-school-11");
+
+let oldSchool22Button = document.querySelector("#old-school-22");
+
+let oldSchool44Button = document.querySelector("#old-school-44");
+
+oldSchool11Button.addEventListener("click", oldSchoolResize);
+
+oldSchool22Button.addEventListener("click", oldSchoolResize);
+
+oldSchool44Button.addEventListener("click", oldSchoolResize);
+
+
+function oldSchoolResize(event) {
+    // should split this out into a function that take rows / cols
+    let startTime = Date.now();
+    deleteGrid();
+    gridContainer.classList.add("old-school-grid-container");
+
+    let rows;
+    let cols;
+    console.log(event.target.id.indexOf("11"));
+
+    if(event.target.id.indexOf("11") !== -1) {
+        rows = 8;
+        cols = 11;
+    } else if (event.target.id.indexOf("22") !== -1) {
+        rows = 16;
+        cols = 22;
+    } else if (event.target.id.indexOf("44") !== -1) {
+        rows = 32;
+        cols = 44;
+    }
+
+    for(let i = 0; i < rows; i++) {
+        let rowDiv = document.createElement("div");
+        rowDiv.classList.add("row", `row-${i+1}`);
+        gridContainer.append(rowDiv);
+    
+        for(let j = 0; j < cols; j++) {
+            let colDiv = document.createElement("div");
+            colDiv.classList.add("column", `col-${j+1}`, "square");
+            rowDiv.append(colDiv);
+        }
+    }
+
+    console.log(`${Date.now() - startTime}ms`);
+}
+
+
+
+
+let gridToggleButton = document.querySelector("#toggle-grid-lines");
+
+gridToggleButton.addEventListener("click", toggleGridLines);
+
+function toggleGridLines() {
+    gridContainer.classList.toggle("grid-toggle");
+
+    Array.from(gridContainer.children).forEach(child => {
+        child.classList.toggle("grid-toggle");
+    });
+}
