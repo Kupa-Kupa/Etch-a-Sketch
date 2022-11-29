@@ -1,3 +1,7 @@
+/* sidebar */
+let sidebar = document.querySelector(".side-bar");
+
+
 
 /* Grid */
 
@@ -62,6 +66,10 @@ function resizeGrid(){
         }
     }
 
+    // let column = document.querySelector(".column");
+
+    // column.addEventListener("mouseenter", colorChange);
+
     console.log(`${Date.now() - startTime}ms`);
 }
 
@@ -78,7 +86,10 @@ function deleteGrid() {
     gridContainer = document.createElement("div");
     gridContainer.classList.add("grid-container");
 
-    main.append(gridContainer);
+    // want it to appear between the two sidebars so use .after or before
+    // main.append(gridContainer);
+
+    sidebar.after(gridContainer);
 }
 
 
@@ -146,3 +157,28 @@ function toggleGridLines() {
         child.classList.toggle("grid-toggle");
     });
 }
+
+
+
+/*--- Colouring ---*/
+ let row = document.querySelector(".row");
+ let column = document.querySelector(".column");
+
+ // mouseover triggers whenever mouse enters any child of gridContainer
+ gridContainer.addEventListener("mouseover", colorChange);
+
+
+ function colorChange(event) {
+    if(event.target.classList.contains('column')) {
+        console.log("column");
+        event.target.style.backgroundColor = "red";
+    }
+    // event.target.style.backgroundColor = "red";
+    // console.log(event.target)
+    console.log('enter');
+ }
+
+
+
+
+
