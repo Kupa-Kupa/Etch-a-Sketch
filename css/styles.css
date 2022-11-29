@@ -148,3 +148,14 @@ main {
 .grid-toggle {
     gap: 0;
 }
+
+
+/* .back-grid {
+    visibility: hidden;
+    position: absolute;
+    min-width: 100%;
+    min-height: 100%;
+    background-color: black;
+    z-index: -1;
+    top: 0;
+} */
