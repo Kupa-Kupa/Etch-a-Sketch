@@ -22,6 +22,11 @@ for(let i = 0; i < 16; i++) {
     }
 }
 
+/*--- disable grab functionality ---*/
+gridContainer.addEventListener("drag", (event) => {
+    event.preventDefault();
+});
+
 
 /* Slider */
 
@@ -90,6 +95,10 @@ function deleteGrid() {
     // main.append(gridContainer);
 
     sidebar.after(gridContainer);
+
+    // add back event listener for colour change
+    gridContainer.addEventListener("mouseover", colorChange);
+    gridContainer.addEventListener("mousedown", colorChange);
 }
 
 
@@ -161,22 +170,33 @@ function toggleGridLines() {
 
 
 /*--- Colouring ---*/
- let row = document.querySelector(".row");
- let column = document.querySelector(".column");
+let mouseDown = false;
+document.addEventListener("mousedown", () => mouseDown = true);
+document.addEventListener("mouseup", () => mouseDown = false);
 
- // mouseover triggers whenever mouse enters any child of gridContainer
- gridContainer.addEventListener("mouseover", colorChange);
+// mouseout triggers whenever mouse exits any child of gridContainer
+// mouseover triggers whenever mouse enters any child of gridContainer
+gridContainer.addEventListener("mouseover", colorChange);
+gridContainer.addEventListener("mousedown", colorChange);
 
 
- function colorChange(event) {
-    if(event.target.classList.contains('column')) {
-        console.log("column");
-        event.target.style.backgroundColor = "red";
+function colorChange(event) {
+
+    // change tile background on click and move
+    if(event.target.classList.contains('column') && mouseDown == true) {
+        event.target.style.backgroundColor = "red";      
+    }
+    
+    // change single tile background on click
+    if(event.target.classList.contains('column') && event.type === `mousedown`) {
+        // prevent draggable functionality ("grabbing")
+        event.preventDefault();
+        event.target.style.backgroundColor = "red"; 
     }
     // event.target.style.backgroundColor = "red";
     // console.log(event.target)
-    console.log('enter');
- }
+    // console.log('enter');
+}
 
 
 
