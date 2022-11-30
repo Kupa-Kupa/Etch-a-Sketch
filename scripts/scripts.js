@@ -531,7 +531,7 @@ function tenStepsToWhite(targetElement) {
         targetElement.setAttribute('data-lighten', 0);
         step = targetElement.getAttribute('data-lighten');
         console.log(`Set data-lighten: ${step}`);
-    } else if (step < 10) {
+    } else if (targetElement.getAttribute('data-lighten') < 10) {
         step = parseInt(targetElement.getAttribute('data-lighten')) + 1;
         console.log(step);
         targetElement.setAttribute('data-lighten', step);
@@ -579,7 +579,7 @@ function tenStepsToBlack(targetElement) {
         targetElement.setAttribute('data-darken', 0);
         step = targetElement.getAttribute('data-darken');
         console.log(`Set data-darken: ${step}`);
-    } else if (step < 10) {
+    } else if (targetElement.getAttribute('data-darken') < 10) {
         step = parseInt(targetElement.getAttribute('data-darken')) + 1;
         console.log(step);
         targetElement.setAttribute('data-darken', step);
