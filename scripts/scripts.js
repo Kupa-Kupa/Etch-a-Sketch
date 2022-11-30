@@ -27,6 +27,8 @@ let darkenButton = document.querySelector("button#darken");
 
 let lightenButton = document.querySelector("button#lighten");
 
+let colorPicker = document.querySelector("#color-picker");
+
 
 /*--- Button Colours ---*/
 
@@ -44,8 +46,15 @@ eraserButton.addEventListener("click", () => {
     lighten = false;
 });
 
+colorPicker.addEventListener("change", () => {
+    colour = colorPicker.value;
+    rainbow = false;
+    darken = false;
+    lighten = false;
+});
+
 colourButton.addEventListener("click", () => {
-    colour = `rgb(255,255,255)`;
+    colour = colorPicker.value;
     rainbow = false;
     darken = false;
     lighten = false;
