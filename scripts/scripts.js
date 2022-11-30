@@ -5,7 +5,11 @@ let rainbow = false;
 
 let darken = false;
 
+let lighten = false;
+
 let column;
+
+let step;
 
 
 /* sidebar */
@@ -29,21 +33,29 @@ let lightenButton = document.querySelector("button#lighten");
 blackButton.addEventListener("click", () => {
     colour = `rgb(0,0,0)`;
     rainbow = false;
+    darken = false;
+    lighten = false;
 });
 
 eraserButton.addEventListener("click", () => {
     colour = `rgb(255,255,255)`;
     rainbow = false;
+    darken = false;
+    lighten = false;
 });
 
 colourButton.addEventListener("click", () => {
     colour = `rgb(255,255,255)`;
     rainbow = false;
+    darken = false;
+    lighten = false;
 });
 
 rainbowButton.addEventListener("click", () => {
     colour = 'rainbow';
     rainbow = true;
+    darken = false;
+    lighten = false;
     // console.log(randomRGB());
 });
 
@@ -59,11 +71,14 @@ darkenButton.addEventListener("click", () => {
     colour = `rgb(255,255,255)`;
     rainbow = false;
     darken = true;
+    lighten = false;
 });
 
 lightenButton.addEventListener("click", () => {
     colour = `rgb(0,0,0)`;
     rainbow = false;
+    darken = false;
+    lighten = true;
 });
 
 
@@ -71,17 +86,15 @@ function randomRGB(){
     return `rgb(${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)})`;
 }
 
-
-function getColour(){
-    if (colour === 'rainbow') {
-        colour = randomRGB();
-        return colour;
-    } else {
-        return colour;
-    }
-}
-
-
+// dont need
+// function getColour(){
+//     if (colour === 'rainbow') {
+//         colour = randomRGB();
+//         return colour;
+//     } else {
+//         return colour;
+//     }
+// }
 
 
 
@@ -272,14 +285,25 @@ function colorChange(event) {
 
     // rainbow
     if(event.target.classList.contains('column') && mouseDown == true && event.type === `mouseover` && rainbow === true) {
+        event.target.removeAttribute('data-lighten');
+        event.target.removeAttribute('data-darken');
+
         colour = randomRGB();
         // event.target.style.backgroundColor = colour;
         event.target.setAttribute('style', `background-color: ${colour};`);
+
+        return;
     } else if (event.target.classList.contains('column') && event.type === `mousedown` && rainbow === true) {
         event.preventDefault();
+
+        event.target.removeAttribute('data-lighten');
+        event.target.removeAttribute('data-darken');
+
         colour = randomRGB();
         // event.target.style.backgroundColor = colour; 
         event.target.setAttribute('style', `background-color: ${colour};`);
+
+        return;
     }
 
 
@@ -288,31 +312,77 @@ function colorChange(event) {
     /* having big issues trying to get the background colour of the square 
     */
     if(event.target.classList.contains('column') && mouseDown == true && event.type === `mouseover` && darken === true) {
-        console.log(event.target.style.backgroundColor);
-        colour = darkenColour(rgbToHsl(event.target.style.backgroundColor));
+        // console.log(event.target.style.backgroundColor);
+        // colour = darkenColour(rgbToHsl(event.target.style.backgroundColor));
+
+        /* getComputedStyle() returns an object containing the values of all CSS properties 
+        of an element, after applying active stylesheets and resolving any basic computation 
+        those values may contain.
+        HTMLElement.style only returns the inline style of an element in the form of a CSSStyleDeclaration object
+        */
+        // colour = darkenColour(rgbToHsl(getComputedStyle(event.target).getPropertyValue('background-color')));
+
+        // 10 steps to black
+        colour = tenStepsToBlack(event.target);
+
         console.log(colour);
-        event.target.style.backgroundColor = colour; 
+        event.target.style.backgroundColor = colour;
+
+        return;
     } else if (event.target.classList.contains('column') && event.type === `mousedown` && darken === true) {
         event.preventDefault();
-        console.log(event.target);
+        // console.log(event.target);
 
         // gives correct answer of white rgb
-        console.log(getComputedStyle(event.target).getPropertyValue('background-color'));
+        // console.log(getComputedStyle(event.target).getPropertyValue('background-color'));
 
         // logs empty string
-        console.log(event.target.style.backgroundColor);
+        // console.log(event.target.style.backgroundColor);
 
         // doesn't work
         // colour = darkenColour(rgbToHsl(event.target.style.backgroundColor));
         
-        
-        colour = darkenColour(rgbToHsl(getComputedStyle(event.target).getPropertyValue('background-color')));
+        // colour = darkenColour(rgbToHsl(getComputedStyle(event.target).getPropertyValue('background-color')));
 
-
+        // 10 steps to black
+        colour = tenStepsToBlack(event.target);
 
         console.log(colour);
         event.target.style.backgroundColor = colour;
-        console.log(event.target.style.backgroundColor);
+        // console.log(event.target.style.backgroundColor);
+
+        return;
+    }
+
+
+
+
+    // lighten
+    if(event.target.classList.contains('column') && mouseDown == true && event.type === `mouseover` && lighten === true) {
+        // colour = lightenColour(rgbToHsl(getComputedStyle(event.target).getPropertyValue('background-color')));
+
+        // console.log(colour);
+
+        colour = tenStepsToWhite(event.target);
+
+        event.target.style.backgroundColor = colour;
+
+        return;
+
+    } else if (event.target.classList.contains('column') && event.type === `mousedown` && lighten === true) {
+        event.preventDefault();
+        
+        // colour = lightenColour(rgbToHsl(getComputedStyle(event.target).getPropertyValue('background-color')));
+
+        // colour = newLightenColour(getComputedStyle(event.target).getPropertyValue('background-color'));
+
+        colour = tenStepsToWhite(event.target);
+
+        // console.log(colour);
+
+        event.target.style.backgroundColor = colour;
+
+        return;
     }
 
 
@@ -322,21 +392,29 @@ function colorChange(event) {
     
     // change tile background on click and move
     if(event.target.classList.contains('column') && mouseDown == true) {
-        event.target.style.backgroundColor = colour;      
+        event.target.removeAttribute('data-lighten');
+        event.target.removeAttribute('data-darken');
+
+        event.target.style.backgroundColor = colour;
+        
+        return;
     }
     
     // change single tile background on click
     if(event.target.classList.contains('column') && event.type === `mousedown`) {
         // prevent draggable functionality ("grabbing")
         event.preventDefault();
-        event.target.style.backgroundColor = colour; 
+
+        event.target.removeAttribute('data-lighten');
+        event.target.removeAttribute('data-darken');
+
+        event.target.style.backgroundColor = colour;
+
+        return;
     }
     // console.log(event.target)
     // console.log('enter');
 
-    
-
-    
 }
 
 
@@ -404,7 +482,130 @@ function darkenColour(hsl) {
     let hslArray = hsl.replace(/[^\d,.]/g, '').split(',');
     console.log(hslArray);
     console.log(hslArray[2]);
-    let darkenL = hslArray[2] - 0.1;
+    let darkenL = parseFloat(hslArray[2])- 0.1;
     let darkHsl = `hsl(${hslArray[0]}, ${hslArray[1] * 100}%, ${darkenL * 100}%)`;
     return darkHsl;
+}
+
+
+
+function lightenColour(hsl) {
+    let hslArray = hsl.replace(/[^\d,.]/g, '').split(',');
+    console.log(hslArray);
+    console.log(hslArray[2]);
+    let lightenL = Number(hslArray[2]) + 0.1;
+    let lightHsl = `hsl(${hslArray[0]}, ${hslArray[1] * 100}%, ${lightenL * 100}%)`;
+    return lightHsl;
+}
+
+
+// could have just added 26 to rgb values instead of doing the hsl conversion...
+function newLightenColour(rgb) {
+    let RGBArray = rgb.replace(/[^\d,.]/g, '').split(',');
+    console.log(RGBArray);
+
+    RGBArray.forEach((item, index) => {
+        console.log(item);
+        console.log(index);
+        RGBArray[index] = parseInt(item) + 26;
+        console.log(item);
+    });
+
+    console.log(RGBArray);
+
+    let lightRGB = `rgb(${RGBArray[0]}, ${RGBArray[1]}, ${RGBArray[2]})`;
+    return lightRGB;
+}
+
+
+function tenStepsToWhite(targetElement) {
+    
+    let rgb = getComputedStyle(targetElement).getPropertyValue('background-color');
+    
+    let RGBArray = rgb.replace(/[^\d,.]/g, '').split(',');
+
+    console.log(RGBArray);
+
+    if (!targetElement.hasAttribute('data-lighten')) {
+        targetElement.removeAttribute('data-darken');
+        targetElement.setAttribute('data-lighten', 0);
+        step = targetElement.getAttribute('data-lighten');
+        console.log(`Set data-lighten: ${step}`);
+    } else if (step < 10) {
+        step = parseInt(targetElement.getAttribute('data-lighten')) + 1;
+        console.log(step);
+        targetElement.setAttribute('data-lighten', step);
+        console.log(`Set data-lighten: ${step}`);
+    }
+
+    
+    RGBArray.forEach((item, index) => {
+
+        if (step > 9) {
+            return;
+        } else if(item == 0) {
+            RGBArray[index] = 26;
+            return;
+        } else {
+            console.log(item);
+            console.log(index);
+            RGBArray[index] = parseInt(item) + ( (255 - parseInt(item)) / (10 - parseInt(step)) );
+            console.log(parseInt(item));
+            console.log(parseInt(step));
+            console.log((10 - parseInt(step)));
+            console.log(RGBArray[index]);
+            return;
+        }
+
+    });
+
+    console.log(RGBArray);
+
+    let lightRGB = `rgb(${RGBArray[0]}, ${RGBArray[1]}, ${RGBArray[2]})`;
+    return lightRGB;
+}
+
+
+function tenStepsToBlack(targetElement) {
+    
+    let rgb = getComputedStyle(targetElement).getPropertyValue('background-color');
+    
+    let RGBArray = rgb.replace(/[^\d,.]/g, '').split(',');
+
+    console.log(RGBArray);
+
+    if (!targetElement.hasAttribute('data-darken')) {
+        targetElement.removeAttribute('data-lighten');
+        targetElement.setAttribute('data-darken', 0);
+        step = targetElement.getAttribute('data-darken');
+        console.log(`Set data-darken: ${step}`);
+    } else if (step < 10) {
+        step = parseInt(targetElement.getAttribute('data-darken')) + 1;
+        console.log(step);
+        targetElement.setAttribute('data-darken', step);
+        console.log(`Set data-darken: ${step}`);
+    }
+
+    
+    RGBArray.forEach((item, index) => {
+
+        if (step > 9) {
+            return;
+        } else {
+            console.log(item);
+            console.log(index);
+            RGBArray[index] = parseInt(item) - ( parseInt(item) / (10 - parseInt(step)) );
+            console.log(parseInt(item));
+            console.log(parseInt(step));
+            console.log((10 - parseInt(step)));
+            console.log(RGBArray[index]);
+            return;
+        }
+
+    });
+
+    console.log(RGBArray);
+
+    let darkRGB = `rgb(${RGBArray[0]}, ${RGBArray[1]}, ${RGBArray[2]})`;
+    return darkRGB;
 }
