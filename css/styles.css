@@ -1,3 +1,9 @@
+/*--- Root ---*/
+:root {
+    --background-color: rgb(255,245,210);
+    --etch-red: rgb(255, 11, 11);
+}
+
 /*--- HTML ---*/
 html {
     box-sizing: border-box;
@@ -12,10 +18,10 @@ body {
     /* want the body to take up 100% of viewable page */
     height: 100vh;
     margin: 0;
+    background-color: var(--background-color);
 
     /* center text for page */
     text-align: center;
-    
 }
 
 
@@ -31,7 +37,7 @@ main {
     /* flex: 1; */
 
     /* width: 1200px; */
-    width: 1000px;
+    /* width: 1000px; */
 
     display: flex;
     gap: 3em;
@@ -39,9 +45,45 @@ main {
     /* align-items: center; */
 }
 
+.etch-container {
+    /* outline: solid 50px var(--etch-red); */
+
+    /* border: solid 50px var(--etch-red);
+    border-radius: 30px; */
+
+    /* padding: 50px;
+    background-color: var(--etch-red); */
+    
+    
+    /*  setting width to width of old-school grid container
+        + borders, so that sidebars stay in fixed position 
+        when changing from a square to a rectangle grid*/
+    width: 760px;
+
+    /* margin-left: 50px;
+    margin-right: 50px; */
+    /* min-width: 800px;
+    min-height: 600px; */
+
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.old-school-etch {
+    padding: 50px;
+}
+
 .grid-container {
 
-    border: solid 4px rgb(0, 0, 0);
+    box-sizing: initial;
+
+    border: solid 50px var(--etch-red);
+    border-radius: 30px;
+
+
+    /* border: solid 4px rgb(0, 0, 0); */
     background-color: black;
 
     /* min-width: 600px;
@@ -58,6 +100,14 @@ main {
     flex-direction: column;
     /* can create the illusion of a border by using a gap */
     gap: 1px;
+}
+
+.square-grid {
+    min-width: 480px;
+    min-height: 480px;
+
+    max-width: 480px;
+    max-height: 480px;
 }
 
 .row {
@@ -131,13 +181,16 @@ main {
 
 .old-school-grid-container {
 
-    border: solid 4px rgb(0, 0, 0);
+    /* border: solid 4px rgb(0, 0, 0); */
     background-color: black;
 
     /* min-width: 825px;
     min-height: 600px; */
     min-width: 660px;
     min-height: 480px;
+
+    max-width: 660px;
+    max-height: 480px;
 
     display: flex;
     flex-direction: column;
@@ -161,7 +214,7 @@ input[type='color'] {
 
 input[type='color']::-webkit-color-swatch-wrapper {
   padding: 0;
-  background-color: white;
+  background-color: var(--background-color);
 }
 
 input[type='color']::-webkit-color-swatch {

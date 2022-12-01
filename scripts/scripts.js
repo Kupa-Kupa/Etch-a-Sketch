@@ -115,6 +115,8 @@ let main = document.querySelector("main");
 
 let gridContainer = document.querySelector(".grid-container");
 
+let etchContainer = document.querySelector(".etch-container");
+
 
 for(let i = 0; i < 16; i++) {
     let rowDiv = document.createElement("div");
@@ -165,6 +167,9 @@ function resizeGrid(){
     // clearGrid();
     deleteGrid();
 
+    // square resize
+    gridContainer.classList.add("square-grid");
+
     let rows = parseInt(sliderValueDisplay.textContent);
     console.log(rows);
 
@@ -197,14 +202,20 @@ function clearGrid() {
 
 
 function deleteGrid() {
-    main.removeChild(gridContainer);
+    // main.removeChild(gridContainer);
+    etchContainer.removeChild(gridContainer);
+
+
     gridContainer = document.createElement("div");
     gridContainer.classList.add("grid-container");
 
     // want it to appear between the two sidebars so use .after or before
     // main.append(gridContainer);
 
-    sidebar.after(gridContainer);
+    // sidebar.after(gridContainer);
+
+    // created a container for the etch so can just use append again
+    etchContainer.append(gridContainer);
 
     // add back event listener for colour change
     gridContainer.addEventListener("mouseover", colorChange);
