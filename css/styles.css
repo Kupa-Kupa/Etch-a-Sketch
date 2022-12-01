@@ -1,7 +1,14 @@
+/*--- Imports ---*/
+@import url('https://fonts.googleapis.com/css2?family=Londrina+Sketch&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 /*--- Root ---*/
 :root {
-    --background-color: rgb(255,245,210);
+    --background-color: rgb(255,230,50);
     --etch-red: rgb(255, 11, 11);
+    --etch-yellow: rgb(255,230,50);
+    --grid-background-color: rgb(255,255,255);
+    --active-button: rgb(0,0,0);
 }
 
 /*--- HTML ---*/
@@ -15,8 +22,10 @@ html {
 
 /*--- Body ---*/
 body {
-    /* want the body to take up 100% of viewable page */
-    height: 100vh;
+    /*  want the body to take up 100% of viewable page so flexbox pushes 
+        footer down */
+    /* height: 100vh; */
+
     margin: 0;
     background-color: var(--background-color);
 
@@ -27,13 +36,53 @@ body {
 
 /*--- main ---*/
 
-body {
+/* dont need body to be flex to set up header and footer */
+/* body {
     display: flex;
     justify-content: center;
     align-items: center;
+} */
+
+header > h1 {
+    color: var(--etch-red);
+    font-family: 'Londrina Sketch', cursive;
+    font-size: 4em;
+    margin: 20px 0;
+}
+
+footer {
+    /* position: absolute;
+    bottom: 0;
+    width: 100%;
+    max-height: 2rem; */
+
+    font-family: 'Roboto', sans-serif;
+    color: var(--etch-red);
+
+}
+
+button {
+    background-color: var(--etch-red);
+    color: white;
+    font-weight: bold;
+    /* font-family: 'Roboto', sans-serif; */
+    font-size: 1.11em;
+
+    border: none;
+    border-radius: 5px;
+
+    min-width: 150px;
+    padding: 10px;
+}
+
+.active-button {
+    background-color: var(--active-button);
 }
 
 main {
+    /* space for footer */
+    padding-bottom: 2rem;
+
     /* flex: 1; */
 
     /* width: 1200px; */
@@ -41,8 +90,10 @@ main {
 
     display: flex;
     gap: 3em;
-    /* justify-content: space-between; */
+    justify-content: center;
     /* align-items: center; */
+
+    
 }
 
 .etch-container {
@@ -120,7 +171,7 @@ main {
 }
 
 .column {
-    background-color: white;
+    background-color: var(--grid-background-color);
     /* border: solid 1px rgb(46, 46, 46); */
 
     flex: 1;

@@ -32,35 +32,40 @@ let colorPicker = document.querySelector("#color-picker");
 
 /*--- Button Colours ---*/
 
-blackButton.addEventListener("click", () => {
+blackButton.addEventListener("click", (event) => {
+    activeButton(event);
     colour = `rgb(0,0,0)`;
     rainbow = false;
     darken = false;
     lighten = false;
 });
 
-eraserButton.addEventListener("click", () => {
+eraserButton.addEventListener("click", (event) => {
+    activeButton(event);
     colour = `rgb(255,255,255)`;
     rainbow = false;
     darken = false;
     lighten = false;
 });
 
-colorPicker.addEventListener("change", () => {
+colorPicker.addEventListener("change", (event) => {
+    activeButton(event);
     colour = colorPicker.value;
     rainbow = false;
     darken = false;
     lighten = false;
 });
 
-colourButton.addEventListener("click", () => {
+colourButton.addEventListener("click", (event) => {
+    activeButton(event);
     colour = colorPicker.value;
     rainbow = false;
     darken = false;
     lighten = false;
 });
 
-rainbowButton.addEventListener("click", () => {
+rainbowButton.addEventListener("click", (event) => {
+    activeButton(event);
     colour = 'rainbow';
     rainbow = true;
     darken = false;
@@ -76,14 +81,16 @@ rainbowButton.addEventListener("click", () => {
     through
     3) convert to hex?
 */
-darkenButton.addEventListener("click", () => {
+darkenButton.addEventListener("click", (event) => {
+    activeButton(event);
     colour = `rgb(255,255,255)`;
     rainbow = false;
     darken = true;
     lighten = false;
 });
 
-lightenButton.addEventListener("click", () => {
+lightenButton.addEventListener("click", (event) => {
+    activeButton(event);
     colour = `rgb(0,0,0)`;
     rainbow = false;
     darken = false;
@@ -93,6 +100,22 @@ lightenButton.addEventListener("click", () => {
 
 function randomRGB(){
     return `rgb(${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)})`;
+}
+
+
+function activeButton(event){
+
+    let buttons = document.querySelectorAll("button");
+
+    buttons.forEach((button) => {
+        button.classList.remove("active-button");
+    });
+
+    if(event.target.id === 'color-picker') {
+        colourButton.classList.add("active-button");
+    } else {
+        event.target.classList.add("active-button");
+    }
 }
 
 // dont need
