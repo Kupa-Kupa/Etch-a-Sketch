@@ -57,6 +57,7 @@ footer {
     max-height: 2rem; */
 
     font-family: 'Roboto', sans-serif;
+    font-weight: 900;
     color: var(--etch-red);
 
 }
@@ -304,6 +305,9 @@ input[type='color']::-webkit-color-swatch {
 } */
 
 
+footer a, footer a:visited {
+    color: var(--etch-red);
+}
 
 @media (max-width: 1259px) {
 
