@@ -1,6 +1,6 @@
 /*--- Imports ---*/
 @import url('https://fonts.googleapis.com/css2?family=Londrina+Sketch&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
 
 /*--- Root ---*/
 :root {
@@ -65,17 +65,17 @@ button {
     background-color: var(--etch-red);
     color: white;
     font-weight: bold;
-    /* font-family: 'Roboto', sans-serif; */
+    font-family: 'Roboto', sans-serif;
     font-size: 1.11em;
 
     border: none;
     border-radius: 5px;
 
-    min-width: 150px;
+    min-width: 160px;
     padding: 10px;
 }
 
-.active-button {
+.active-colour-button, .active-grid-button, .active-os-size {
     background-color: var(--active-button);
 }
 
@@ -177,29 +177,53 @@ main {
     flex: 1;
 }
 
-/* .column:hover {
-    background-color: blue;
-} */
 
+.side-bar-left {
+    min-width: 200px;
+    display: flex;
+    justify-content: flex-end;
+}
 
+.side-bar-right {
+    min-width: 200px;
+    display: flex;
+    justify-content: flex-start;
 
+    /* margin-top: 90px; */
+}
 
-.slider {
-    /* min-width: 250px; */
-
+.side-bar {
     display: flex;
     flex-direction: column;
-    /* align-items: flex-start;
-    align-content: flex-start; */
-    align-items: flex-end;
-    justify-content: space-between;
-    /* flex-wrap: wrap; */
     gap: 1em;
 }
 
-.slider-value-display {
-    padding-right: 1em;
+
+.side-bar h2 {
+    color: var(--etch-red);
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5em;
+    font-weight: 900;
+    margin: 0;
+
+    margin: 6px 0;
 }
+
+/* match height (74px) of colour picker div on left side bar */
+
+.slider {
+    min-height: 74px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* .slider-value-display {
+    padding-right: 1em;
+} */
 
 .resize {
     display: flex;
@@ -209,16 +233,10 @@ main {
 }
 
 
-.side-bar {
-    min-width: 200px;
-    display: flex;
-    flex-direction: column;
-    align-content: flex-start;
-    gap: 2em;
-}
 
-.slider, .resize, .old-school {
-    /* flex: 1; */
+
+.hidden {
+    display: none;
 }
 
 .old-school {

@@ -29,11 +29,20 @@ let lightenButton = document.querySelector("button#lighten");
 
 let colorPicker = document.querySelector("#color-picker");
 
+let clearButton = document.querySelector("button#clear");
+
+let squareButton = document.querySelector("button#square");
+
+let oldSchoolButton = document.querySelector("button#old-school-default-22");
+
+let oldSchoolContainer = document.querySelector("div.old-school-container");
+
+
 
 /*--- Button Colours ---*/
 
 blackButton.addEventListener("click", (event) => {
-    activeButton(event);
+    activeColourButton(event);
     colour = `rgb(0,0,0)`;
     rainbow = false;
     darken = false;
@@ -41,7 +50,7 @@ blackButton.addEventListener("click", (event) => {
 });
 
 eraserButton.addEventListener("click", (event) => {
-    activeButton(event);
+    activeColourButton(event);
     colour = `rgb(255,255,255)`;
     rainbow = false;
     darken = false;
@@ -49,7 +58,7 @@ eraserButton.addEventListener("click", (event) => {
 });
 
 colorPicker.addEventListener("change", (event) => {
-    activeButton(event);
+    activeColourButton(event);
     colour = colorPicker.value;
     rainbow = false;
     darken = false;
@@ -57,7 +66,7 @@ colorPicker.addEventListener("change", (event) => {
 });
 
 colourButton.addEventListener("click", (event) => {
-    activeButton(event);
+    activeColourButton(event);
     colour = colorPicker.value;
     rainbow = false;
     darken = false;
@@ -65,7 +74,7 @@ colourButton.addEventListener("click", (event) => {
 });
 
 rainbowButton.addEventListener("click", (event) => {
-    activeButton(event);
+    activeColourButton(event);
     colour = 'rainbow';
     rainbow = true;
     darken = false;
@@ -82,7 +91,7 @@ rainbowButton.addEventListener("click", (event) => {
     3) convert to hex?
 */
 darkenButton.addEventListener("click", (event) => {
-    activeButton(event);
+    activeColourButton(event);
     colour = `rgb(255,255,255)`;
     rainbow = false;
     darken = true;
@@ -90,7 +99,7 @@ darkenButton.addEventListener("click", (event) => {
 });
 
 lightenButton.addEventListener("click", (event) => {
-    activeButton(event);
+    activeColourButton(event);
     colour = `rgb(0,0,0)`;
     rainbow = false;
     darken = false;
@@ -98,25 +107,105 @@ lightenButton.addEventListener("click", (event) => {
 });
 
 
+clearButton.addEventListener("click", (event) => {
+    fillGrid();
+});
+
+
+oldSchoolButton.addEventListener("click", (event) => {
+    activeGridButton(event);
+
+    activeOSSize(event)
+
+    oldSchoolResize(event);
+});
+
+
+squareButton.addEventListener("click", (event) => {
+    if(!squareButton.classList.contains("active-grid-button")) {
+        resizeGrid();
+    }
+
+    // needs to come after if statement or grid won't change when changing from old school
+    activeGridButton(event);
+});
+
+
+
+
+
+
+function fillGrid() {
+    Array.from(gridContainer.children).forEach(row => {
+        Array.from(row.children).forEach(column => {
+            column.style.backgroundColor = "var(--grid-background-color)";
+        });
+    });
+}
+
+
 function randomRGB(){
     return `rgb(${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)})`;
 }
 
 
-function activeButton(event){
+function activeColourButton(event){
 
     let buttons = document.querySelectorAll("button");
 
     buttons.forEach((button) => {
-        button.classList.remove("active-button");
+        button.classList.remove("active-colour-button");
     });
 
     if(event.target.id === 'color-picker') {
-        colourButton.classList.add("active-button");
+        colourButton.classList.add("active-colour-button");
     } else {
-        event.target.classList.add("active-button");
+        event.target.classList.add("active-colour-button");
     }
 }
+
+
+function activeGridButton(event){
+
+    let buttons = document.querySelectorAll("button");
+
+    buttons.forEach((button) => {
+        button.classList.remove("active-grid-button");
+    });
+    
+    if(event.target.id === 'resize') {
+        squareButton.classList.add("active-grid-button");
+    } else {
+        event.target.classList.add("active-grid-button");
+    }
+
+    if(oldSchoolButton.classList.contains("active-grid-button")) {
+        oldSchoolContainer.classList.remove("hidden");
+    } else {
+        oldSchoolContainer.classList.add("hidden");
+    }
+}
+
+
+function activeOSSize(event){
+
+    let buttons = document.querySelectorAll("button");
+
+    buttons.forEach((button) => {
+        button.classList.remove("active-os-size");
+    });
+    
+    if(event.target.id === 'old-school-default-22') {
+        oldSchool22Button.classList.add("active-os-size");
+    } else {
+        event.target.classList.add("active-os-size");
+    }
+}
+
+
+
+
+
 
 // dont need
 // function getColour(){
@@ -181,12 +270,21 @@ function changeSliderValueDisplay(event) {
 
 /* Resize grid */
 
-let resize = document.querySelector("#resize");
+let resize = document.querySelector("button#resize");
 
-resize.addEventListener("click", resizeGrid);
+// resize.addEventListener("click", resizeGrid);
+
+resize.addEventListener("click", (event) => {
+    activeGridButton(event);
+    resizeGrid();
+});
 
 function resizeGrid(){
     let startTime = Date.now();
+
+    // 
+
+
     // clearGrid();
     deleteGrid();
 
@@ -253,11 +351,22 @@ let oldSchool22Button = document.querySelector("#old-school-22");
 
 let oldSchool44Button = document.querySelector("#old-school-44");
 
-oldSchool11Button.addEventListener("click", oldSchoolResize);
 
-oldSchool22Button.addEventListener("click", oldSchoolResize);
 
-oldSchool44Button.addEventListener("click", oldSchoolResize);
+oldSchool11Button.addEventListener("click", (event) => {
+    oldSchoolResize(event);
+    activeOSSize(event);
+});
+
+oldSchool22Button.addEventListener("click", (event) => {
+    oldSchoolResize(event);
+    activeOSSize(event);
+});
+
+oldSchool44Button.addEventListener("click", (event) => {
+    oldSchoolResize(event);
+    activeOSSize(event);
+});
 
 
 function oldSchoolResize(event) {
